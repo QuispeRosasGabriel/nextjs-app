@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import { Global, css } from '@emotion/core';
+import Head from 'next/head';
 
 const Layout = (props) => {
     return (
@@ -41,6 +42,14 @@ const Layout = (props) => {
                 }
             `}
             />
+
+            <Head>
+                <html lang="es" />
+                <title>Proyecto con Next.js</title>
+                <link rel="stylesheet" 
+                    href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" 
+                    crossorigin="anonymous" />
+            </Head>
             <Header />
             <main>
              {props.children}
