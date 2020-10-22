@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Search from '../ui/Search'
 import Navbar from './Navbar'
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
+import Boton from '../ui/Boton';
 
 const ContenedorHeader = styled.div`
     max-width:1200px;
@@ -11,7 +12,7 @@ const ContenedorHeader = styled.div`
     margin: 0 auto;
     @media(min-width:768px) {
         display: flex;
-        justify-content: space-betwee;
+        justify-content: space-between;
     }    
 `
 
@@ -24,28 +25,68 @@ const Logo = styled.p`
 `
 
 const Header = () => {
+
+    const usuario = true;
+
     return (
         <header
             css={
                 css`
                 border-bottom: 2px solid var(--gris3);
                 padding: 1rem 0;    
-            `}            
+            `}
         >
             <ContenedorHeader>
-                <div>
+                <div
+                    css={css`
+                    display: flex;
+                    align-items: center;
+                    `}
+                >
                     <Link href="/">
                         <Logo>P</Logo>
                     </Link>
                     <Search />
-                    <Navbar  />
-                </div> 
-                <div>
-                    <p>Hola Gabriel</p>
-                    <button type="button">Cerrar Sesión</button>
-                    <Link href="/">Login</Link>
-                    <Link href="/">Crear cuenta</Link>
-                </div>   
+                    <Navbar />
+                </div>
+                <div
+                    css={css`
+                        display: flex;
+                        align-items: center;
+                    `}
+                >
+                    {
+                        usuario ? (
+                        <Fragment>
+                            <p
+                                css={css`
+                                margin-right: 2rem;
+                                `}
+                            >Hola Gabriel</p>
+                            <Boton
+                                bgColor="true"
+                                type="button">
+                                 Cerrar Sesión
+                            </Boton>
+                        </Fragment>
+                        ) : (
+                        <Fragment>
+                           <Link href="/">
+                                <Boton
+                                  bgColor="true"
+                                        >
+                                     Login
+                                </Boton>
+                            </Link>
+                            <Link href="/">
+                                <Boton>
+                                   Crear cuenta
+                                </Boton>
+                            </Link>
+                        </Fragment>
+                        )
+                    }
+                </div>
             </ContenedorHeader>
         </header>
     )
