@@ -2,7 +2,19 @@ import Layout from '../components/layouts/Layout';
 import {Campo, Formulario, InputSubmit} from '../components/ui/Formulario';
 import {css} from '@emotion/core';
 
-export default function CreateAccount() {
+// validaciones
+import useValidation from '../hooks/useValidation';
+import validateCreateAccount from '../validators/validateCreateAccount';
+
+const CreateAccount = () => {
+
+  const STATE_INICIAL = {
+    nombre: '',
+    email: '',
+    password: ''
+  }
+  const {} = useValidation(STATE_INICIAL, validateCreateAccount);
+
   return (
     <div>
       <Layout>
@@ -50,3 +62,5 @@ export default function CreateAccount() {
     </div>
   )
 }
+
+export default CreateAccount;
