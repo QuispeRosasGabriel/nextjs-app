@@ -6,14 +6,25 @@ import {css} from '@emotion/core';
 import useValidation from '../hooks/useValidation';
 import validateCreateAccount from '../validators/validateCreateAccount';
 
+const STATE_INICIAL = {
+  nombre: '',
+  email: '',
+  password: ''
+}
+
 const CreateAccount = () => {
 
-  const STATE_INICIAL = {
-    nombre: '',
-    email: '',
-    password: ''
+  const {
+    valores,
+    errores,
+    submitForm,
+    handleSubmit,
+    handleChange
+  } = useValidation(STATE_INICIAL, validateCreateAccount, createAccount);
+
+  function createAccount () {
+    console.log('creando cuenta');
   }
-  const {} = useValidation(STATE_INICIAL, validateCreateAccount);
 
   return (
     <div>
