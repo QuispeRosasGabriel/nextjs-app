@@ -2,11 +2,13 @@ import Layout from '../components/layouts/Layout';
 import {Campo, Formulario, InputSubmit, Error} from '../components/ui/Formulario';
 import {css} from '@emotion/core';
 import firebase from '../firebase';
+import { useState } from 'react';
+import Router from 'next/router';
 
 // validaciones
 import useValidation from '../hooks/useValidation';
 import validateCreateAccount from '../validators/validateCreateAccount';
-import { useState } from 'react';
+
 
 const STATE_INICIAL = {
   nombre: '',
@@ -25,14 +27,17 @@ const CreateAccount = () => {
   } = useValidation(STATE_INICIAL, validateCreateAccount, createAccount);
 
   const { nombre, email, password } = valores; 
-  const [successCreation, setSuccessCreation] = useState(false)
+  const [successCreation, setSuccessCreation] = useState(false);
+  const [errorCreation, setErrorCreation] = useState(false);
 
   async function createAccount () {
     try {
       await firebase.register(nombre, email, password);
       setSuccessCreation(true);
+      Router.push('/');
     } catch (error) {
       console.error('Hubo un error', error);
+      setErrorCreation(error.message); 
     }
   }
 
@@ -96,7 +101,7 @@ const CreateAccount = () => {
             />
           </Campo>
           {errores.password && <Error>{errores.password}</Error>}
-
+        {errorCreation ? <Error>{errorCreation}</Error> : null} 
           <InputSubmit
             type="submit"
             value="Crear Cuenta"
