@@ -16,13 +16,13 @@ const useValidation = (initialState, validar, fn) => {
         }
         return () => {
         }
-    }, [])
+    }, [errores])
 
     // funcion que se ejecuta cuando el usuario esta escribiendo
     const handleChange = (e) => {
         setValores({
            ...valores,
-           [e.targe.name]: e.target.value           
+           [e.target.name]: e.target.value           
         })
     }
 
