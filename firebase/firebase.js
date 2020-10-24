@@ -1,10 +1,22 @@
 import app from 'firebase/app';
 import firebaseConfig from './config';
+import 'firebase/auth';
 
 class Firebase {
     constructor() {
-        if(!app.apps.length)
-        app.initializeApp(firebaseConfig);
+        if(!app.apps.length) {
+            app.initializeApp(firebaseConfig);
+        }
+        this.auth = app.auth();
+    }
+
+    // Registrar un usuario
+    async register(nombre, email, password) {
+        const nuevoUsuario = await this.auth.createUserWithEmailAndPassword(email, password);
+    
+        return await nuevoUsuario.user.updateProfile({
+            displayName: nombre
+        })
     }
 }
 

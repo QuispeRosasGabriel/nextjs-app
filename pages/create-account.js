@@ -1,6 +1,7 @@
 import Layout from '../components/layouts/Layout';
 import {Campo, Formulario, InputSubmit, Error} from '../components/ui/Formulario';
 import {css} from '@emotion/core';
+import firebase from '../firebase';
 
 // validaciones
 import useValidation from '../hooks/useValidation';
@@ -23,9 +24,15 @@ const CreateAccount = () => {
   } = useValidation(STATE_INICIAL, validateCreateAccount, createAccount);
 
   const { nombre, email, password } = valores; 
+  const [successCreation, setSuccessCreation] = useState(false)
 
-  function createAccount () {
-    console.log('creando cuenta');
+  async function createAccount () {
+    try {
+      await firebase.register(nombre, email, password);
+      setSuccessCreation(true);
+    } catch (error) {
+      console.error('Hubo un error', error);
+    }
   }
 
   return (
@@ -94,6 +101,7 @@ const CreateAccount = () => {
             value="Crear Cuenta"
           />
         </Formulario>
+        {successCreation && <p>Usuario creado exitosamente</p>}
       </Layout>
     </div>
   )
