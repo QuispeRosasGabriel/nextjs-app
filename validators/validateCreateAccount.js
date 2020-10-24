@@ -3,7 +3,7 @@ const validateCreateAccount = (valores) => {
 
     // Validar el nombre del usuario
     if(!valores.nombre) {
-        errores.nombres = 'El nombre es obligatorio';
+        errores.nombre = 'El nombre es obligatorio';
     }
 
     //Validar el email

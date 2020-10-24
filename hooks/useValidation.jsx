@@ -34,12 +34,18 @@ const useValidation = (initialState, validar, fn) => {
         setSubmitForm(true);
     }
 
+    // cuando se revisa el evento
+    const handleBlur = () =>{
+        const erroresValidacion = validar(valores);
+        setErrores(erroresValidacion);
+    }
+
     return {
         valores,
         errores,
-        submitForm,
         handleSubmit,
-        handleChange
+        handleChange,
+        handleBlur
     }
 }
 

@@ -1,5 +1,5 @@
 import Layout from '../components/layouts/Layout';
-import {Campo, Formulario, InputSubmit} from '../components/ui/Formulario';
+import {Campo, Formulario, InputSubmit, Error} from '../components/ui/Formulario';
 import {css} from '@emotion/core';
 
 // validaciones
@@ -17,9 +17,9 @@ const CreateAccount = () => {
   const {
     valores,
     errores,
-    submitForm,
     handleSubmit,
-    handleChange
+    handleChange,
+    handleBlur
   } = useValidation(STATE_INICIAL, validateCreateAccount, createAccount);
 
   const { nombre, email, password } = valores; 
@@ -48,12 +48,16 @@ const CreateAccount = () => {
               Nombre
             </label>
             <input 
-              type="text" id="nombre"
+              type="text" 
+              id="nombre"
               placeholder="Escribe tu nombre..."
               name="nombre"
+              value={nombre}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
           </Campo>
+          {errores.nombre && <Error>{errores.nombre}</Error>}
           <Campo>
             <label htmlfor="email">
               email
@@ -64,9 +68,12 @@ const CreateAccount = () => {
               placeholder="Escribe tu email..."
               name="email"
               value={email}
+              onBlur={handleBlur}
               onChange={handleChange}
             />
           </Campo>
+          {errores.email && <Error>{errores.email}</Error>}
+
           <Campo>
             <label htmlfor="nombre">
               Password
@@ -75,10 +82,13 @@ const CreateAccount = () => {
               type="password"
               id="password"
               name="password"
+              onBlur={handleBlur}
               onChange={handleChange}
               value={password}
             />
           </Campo>
+          {errores.password && <Error>{errores.password}</Error>}
+
           <InputSubmit
             type="submit"
             value="Crear Cuenta"
