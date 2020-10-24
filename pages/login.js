@@ -26,10 +26,16 @@ const Login = () => {
 
   const { email, password } = valores; 
   const [successCreation, setSuccessCreation] = useState(false);
-  const [errorCreation, setErrorCreation] = useState(false);
+  const [errorLogin, setErrorLogin] = useState(false);
 
-  function iniciarSesion () {
-    console.log('iniciar sesion');
+  async function iniciarSesion () {
+    try {
+      await firebase.login(email, password); 
+      Router.push('/');     
+    } catch (error) {
+      console.error('Hubo un error al iniciar sesión', error.message);
+      setErrorLogin(error.message);
+    }
   }
 
   return (
@@ -77,7 +83,7 @@ const Login = () => {
             />
           </Campo>
           {errores.password && <Error>{errores.password}</Error>}
-        {errorCreation ? <Error>{errorCreation}</Error> : null} 
+        {errorLogin ? <Error>{errorLogin}</Error> : null} 
           <InputSubmit
             type="submit"
             value="Iniciar Sesión"
