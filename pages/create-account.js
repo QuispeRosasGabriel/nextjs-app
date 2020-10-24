@@ -6,6 +6,7 @@ import firebase from '../firebase';
 // validaciones
 import useValidation from '../hooks/useValidation';
 import validateCreateAccount from '../validators/validateCreateAccount';
+import { useState } from 'react';
 
 const STATE_INICIAL = {
   nombre: '',
