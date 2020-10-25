@@ -7,13 +7,12 @@ import Router from 'next/router';
 
 // validaciones
 import useValidation from '../hooks/useValidation';
-import validateCreateAccount from '../validators/validateCreateAccount';
-
+import validateNewProduct from '../validators/validateNewProduct';
 
 const STATE_INICIAL = {
   nombre: '',
   empresa: '',
-  imagen: '',
+  //imagen: '',
   url: '',
   description:''
 }
@@ -26,7 +25,7 @@ const NewProduct = () => {
     handleSubmit,
     handleChange,
     handleBlur
-  } = useValidation(STATE_INICIAL, validateCreateAccount, createAccount);
+  } = useValidation(STATE_INICIAL, validateNewProduct , createAccount);
 
   const { nombre, empresa, imagen, url, description } = valores;
   const [successCreation, setSuccessCreation] = useState(false);
@@ -82,7 +81,7 @@ const NewProduct = () => {
               />
           </Campo>
           {errores.empresa && <Error>{errores.empresa}</Error>}
-          <Campo>
+      {/**     <Campo>
             <label htmlfor="imagen">
               Imagen
             </label>
@@ -95,7 +94,7 @@ const NewProduct = () => {
               onBlur={handleBlur}
               />
           </Campo>
-          {errores.imagen && <Error>{errores.imagen}</Error>}
+          {errores.imagen && <Error>{errores.imagen}</Error>}*/}
           <Campo>
             <label htmlfor="url">
               Url
