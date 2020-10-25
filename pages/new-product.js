@@ -1,13 +1,12 @@
 import Layout from '../components/layouts/Layout';
 import { Campo, Formulario, InputSubmit, Error } from '../components/ui/Formulario';
 import { css } from '@emotion/core';
-import firebase from '../firebase';
-import { useState } from 'react';
-import Router from 'next/router';
-
+import  { FirebaseContext } from '../firebase';
+import { useState, useContext } from 'react';
 // validaciones
 import useValidation from '../hooks/useValidation';
 import validateNewProduct from '../validators/validateNewProduct';
+import Router, {useRouter} from 'next/router';
 
 const STATE_INICIAL = {
   nombre: '',
@@ -25,14 +24,37 @@ const NewProduct = () => {
     handleSubmit,
     handleChange,
     handleBlur
-  } = useValidation(STATE_INICIAL, validateNewProduct , createAccount);
+  } = useValidation(STATE_INICIAL, validateNewProduct , createProduct);
 
   const { nombre, empresa, imagen, url, description } = valores;
   const [successCreation, setSuccessCreation] = useState(false);
   const [errorCreation, setErrorCreation] = useState(false);
 
-  async function createAccount() {
-    
+  // hook de routing
+  const router = useRouter();
+
+  // Context con las operaciones crud de firebase
+  const { usuario, firebase } = useContext(FirebaseContext);
+
+  async function createProduct() {
+    // Si el usuario no esta autenticado
+    if(!usuario) {
+      router.push('/login');
+    }
+
+    // Crear el objeto de nuevo producto
+    const producto = {
+      nombre,
+      empresa,
+      url,
+      description,
+      votos: 0,
+      comentarios: [],
+      creado: Date.now()
+    }
+
+    // insertar en la base de datos
+    firebase.db.collection('productos').add(producto);
   }
 
   return (
