@@ -3,6 +3,7 @@ import { Campo, Formulario, InputSubmit, Error } from '../components/ui/Formular
 import { css } from '@emotion/core';
 import  { FirebaseContext } from '../firebase';
 import { useState, useContext } from 'react';
+import FileUploader from 'react-firebase-file-uploader';
 // validaciones
 import useValidation from '../hooks/useValidation';
 import validateNewProduct from '../validators/validateNewProduct';
@@ -17,6 +18,11 @@ const STATE_INICIAL = {
 }
 
 const NewProduct = () => {
+  // State de las imagenes
+  const [nameImage, setNameImage] = useState('');
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [urlImage, setUrlImage] = useState('');
 
   const {
     valores,
@@ -55,6 +61,24 @@ const NewProduct = () => {
 
     // insertar en la base de datos
     firebase.db.collection('productos').add(producto);
+  }
+
+  const handleUploadStart = () => {
+    setProgress(0);
+    setUploading(true);
+  }
+
+  const handleOnProgress = (progreso) => setProgress({progreso});
+
+  const handleUploadError = (error) => {
+    setUploading(error);
+    console.error(error);
+  }
+
+  const handleUploadSuccess = (name) => {
+    setProgress(100);
+    setUploading(false);
+    setNameImage(name);
   }
 
   return (
@@ -103,20 +127,26 @@ const NewProduct = () => {
               />
           </Campo>
           {errores.empresa && <Error>{errores.empresa}</Error>}
-      {/**     <Campo>
+           <Campo>
             <label htmlfor="imagen">
               Imagen
             </label>
-            <input 
-              type="file"
+            <FileUploader 
+              accept="image/*"
               id="imagen" 
               name="imagen"
               value={imagen}
               onChange={handleChange}
               onBlur={handleBlur}
+              randomizeFilename
+              storageRef={firebase.storage.ref('')}
+              onUploadStart={handleUploadStart}
+              onUploadError={handleUploadError}
+              onUploadSuccess={handleUploadSuccess}
+              onProgress={handleOnProgress}
               />
           </Campo>
-          {errores.imagen && <Error>{errores.imagen}</Error>}*/}
+          {errores.imagen && <Error>{errores.imagen}</Error>}
           <Campo>
             <label htmlfor="url">
               Url
