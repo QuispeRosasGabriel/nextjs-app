@@ -53,6 +53,7 @@ const NewProduct = () => {
       nombre,
       empresa,
       url,
+      urlImagen,
       description,
       votos: 0,
       comentarios: [],
@@ -61,6 +62,7 @@ const NewProduct = () => {
 
     // insertar en la base de datos
     firebase.db.collection('productos').add(producto);
+    return router.push('/');
   }
 
   const handleUploadStart = () => {
@@ -79,6 +81,11 @@ const NewProduct = () => {
     setProgress(100);
     setUploading(false);
     setNameImage(name);
+    firebase.storage
+    .ref('productos')
+    .child(name)
+    .getDownloadURL()
+    .then((url) => setUrlImage(url));
   }
 
   return (
@@ -135,18 +142,14 @@ const NewProduct = () => {
               accept="image/*"
               id="imagen" 
               name="imagen"
-              value={imagen}
-              onChange={handleChange}
-              onBlur={handleBlur}
               randomizeFilename
-              storageRef={firebase.storage.ref('')}
+              storageRef={firebase.storage.ref('productos')}
               onUploadStart={handleUploadStart}
               onUploadError={handleUploadError}
               onUploadSuccess={handleUploadSuccess}
               onProgress={handleOnProgress}
               />
           </Campo>
-          {errores.imagen && <Error>{errores.imagen}</Error>}
           <Campo>
             <label htmlfor="url">
               Url
