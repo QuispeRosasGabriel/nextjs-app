@@ -53,7 +53,7 @@ const NewProduct = () => {
       nombre,
       empresa,
       url,
-      urlImagen,
+      urlImage,
       description,
       votos: 0,
       comentarios: [],

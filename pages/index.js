@@ -1,6 +1,31 @@
+import { useEffect, useState, useContext } from 'react';
 import Layout from '../components/layouts/Layout'; 
+import { FirebaseContext } from '../firebase';
 
-export default function Home() {
+const Home = () => {
+
+  const [products, setProducts] = useState([]);
+  const {firebase} = useContext(FirebaseContext);  
+
+  useEffect(() => {
+    const getProducts = () => {
+      firebase.db.collection('productos').orderBy('creado', 'desc')
+      .onSnapshot(manejarSnapshot)
+    }
+    getProducts();
+  }, [])
+
+  function manejarSnapshot(snapshot) {
+    const productos = snapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data()
+      }
+    })
+
+    setProducts(productos);
+  }
+
   return (
     <div>
       <Layout>
@@ -9,3 +34,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home;
