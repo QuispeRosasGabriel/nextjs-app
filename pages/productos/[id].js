@@ -85,7 +85,7 @@ const Producto = () => {
                             margin: 2rem 0;
 
                         `}>Comentarios</h2>
-                        {comentarios.map((comentario)=>(
+                        {comentarios?.map((comentario) => (
                             <li>
                                 <p>{comentario.nombre}</p>
                                 <p>Escrito por: {comentario.usuarioNombre}</p>
@@ -98,6 +98,14 @@ const Producto = () => {
                             bgColor="blue"
                             href={url}
                         >Visitar Url</Boton>
+                        <div css={css`
+                            margin-top: 5rem;
+                        `}>
+                        <p css={css`
+                            text-align: center;
+                        `}>{votos} votos</p>
+                        <Boton>Votar</Boton>
+                        </div>
                     </aside>
                 </ContenedorProducto>
             </div>
