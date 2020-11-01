@@ -54,7 +54,8 @@ const Producto = () => {
         empresa,
         nombre,
         url,
-        urlImage } = producto;
+        urlImage,
+        creador} = producto;
 
     return (
         <Layout>
@@ -98,6 +99,9 @@ const Producto = () => {
                             bgColor="blue"
                             href={url}
                         >Visitar Url</Boton>
+
+                        <p>Publicado por: {creador.nombre}}</p>
+
                         <div css={css`
                             margin-top: 5rem;
                         `}>

@@ -57,7 +57,11 @@ const NewProduct = () => {
       description,
       votos: 0,
       comentarios: [],
-      creado: Date.now()
+      creado: Date.now(),
+      creador: {
+        id: usuario.uid,
+        nombre: usuario.displayName
+      }
     }
 
     // insertar en la base de datos
@@ -106,7 +110,7 @@ const NewProduct = () => {
           <fieldset>
             <legend>Información General</legend>
           <Campo>
-            <label htmlfor="nombre">
+            <label htmlFor="nombre">
               Nombre
             </label>
             <input
@@ -121,7 +125,7 @@ const NewProduct = () => {
           </Campo>
           {errores.nombre && <Error>{errores.nombre}</Error>}
           <Campo>
-            <label htmlfor="empresa">
+            <label htmlFor="empresa">
               Empresa
             </label>
             <input 
@@ -135,7 +139,7 @@ const NewProduct = () => {
           </Campo>
           {errores.empresa && <Error>{errores.empresa}</Error>}
            <Campo>
-            <label htmlfor="imagen">
+            <label htmlFor="imagen">
               Imagen
             </label>
             <FileUploader 
@@ -151,7 +155,7 @@ const NewProduct = () => {
               />
           </Campo>
           <Campo>
-            <label htmlfor="url">
+            <label htmlFor="url">
               Url
             </label>
             <input 
@@ -168,7 +172,7 @@ const NewProduct = () => {
           <fieldset>
             <legend>Sobre tu producto</legend>
             <Campo>
-            <label htmlfor="description">
+            <label htmlFor="description">
               Descripción
             </label>
             <textarea
