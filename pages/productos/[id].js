@@ -28,7 +28,7 @@ const Producto = () => {
     const { query: { id } } = router;
 
     // pasando context
-    const { firebase } = useContext(FirebaseContext);
+    const { firebase, usuario } = useContext(FirebaseContext);
 
     useEffect(() => {
         if (id) {
@@ -55,7 +55,7 @@ const Producto = () => {
         nombre,
         url,
         urlImage,
-        creador} = producto;
+        creador } = producto;
 
     return (
         <Layout>
@@ -69,19 +69,23 @@ const Producto = () => {
                     <div>
                         <img src={urlImage} alt="" />
                         <p>{description}</p>
-                        <h2>Agrega un comentario</h2>
-                        <form>
-                            <Campo>
-                                <input
-                                    type="text"
-                                    name="mensaje"
-                                />
-                            </Campo>
-                            <InputSubmit
-                                type="submit"
-                                value="Agregar comentario"
-                            />
-                        </form>
+                        {
+                            usuario && <>
+                                <h2>Agrega un comentario</h2>
+                                <form>
+                                    <Campo>
+                                        <input
+                                            type="text"
+                                            name="mensaje"
+                                        />
+                                    </Campo>
+                                    <InputSubmit
+                                        type="submit"
+                                        value="Agregar comentario"
+                                    />
+                                </form>
+                            </>
+                        }
                         <h2 css={css`
                             margin: 2rem 0;
 
@@ -100,15 +104,17 @@ const Producto = () => {
                             href={url}
                         >Visitar Url</Boton>
 
-                        <p>Publicado por: {creador.nombre}}</p>
+                        <p>Publicado por: {creador.nombre}</p>
 
                         <div css={css`
                             margin-top: 5rem;
                         `}>
-                        <p css={css`
+                            <p css={css`
                             text-align: center;
                         `}>{votos} votos</p>
-                        <Boton>Votar</Boton>
+                            {usuario &&
+                                <Boton>Votar</Boton>
+                            }
                         </div>
                     </aside>
                 </ContenedorProducto>

@@ -8,7 +8,7 @@ import FileUploader from 'react-firebase-file-uploader';
 import useValidation from '../hooks/useValidation';
 import validateNewProduct from '../validators/validateNewProduct';
 import Router, {useRouter} from 'next/router';
-
+import Error404 from '../components/layouts/404';
 const STATE_INICIAL = {
   nombre: '',
   empresa: '',
@@ -92,10 +92,14 @@ const NewProduct = () => {
     .then((url) => setUrlImage(url));
   }
 
+  if(!usuario) return; 
+
   return (
     <div>
       <Layout>
-        <h1
+        {!usuario ? <Error404/> :
+          <>
+                    <h1
           css={css`
             text-align: center;
             margin-top: 5em;
@@ -193,6 +197,9 @@ const NewProduct = () => {
           />
         </Formulario>
         {successCreation && <p>Usuario creado exitosamente</p>}
+
+          </>
+        }
       </Layout>
     </div>
   )
