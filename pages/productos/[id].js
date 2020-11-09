@@ -9,6 +9,8 @@ import Error404 from "../../components/layouts/404";
 import Layout from '../../components/layouts/Layout';
 import { Campo, InputSubmit } from '../../components/ui/Formulario';
 import Boton from '../../components/ui/Boton';
+import React from 'react';
+import { route } from "next/dist/next-server/server/router";
 
 const ContenedorProducto = styled.div`
     @media (min-width: 768px) {
@@ -57,6 +59,24 @@ const Producto = () => {
         urlImage,
         creador } = producto;
 
+    // Administrar y validar los votos
+    const votarProducto = () => {
+        if (!usuario) {
+            return router.push('/login');
+        }
+
+        // Obtener y sumar un nuevo voto
+        const nuevoTotal = votos + 1;
+
+        // Actualizar en la base de datos
+        firebase.db.collection('productos').doc(id).update({ votos: nuevoTotal })
+
+        setProducto({
+            ...producto,
+            votos: nuevoTotal
+        });
+    }
+
     return (
         <Layout>
             {error && <Error404 />}
@@ -104,7 +124,7 @@ const Producto = () => {
                             href={url}
                         >Visitar Url</Boton>
 
-                        <p>Publicado por: {creador.nombre}</p>
+                        <p>Publicado por: {creador?.nombre}</p>
 
                         <div css={css`
                             margin-top: 5rem;
@@ -113,7 +133,9 @@ const Producto = () => {
                             text-align: center;
                         `}>{votos} votos</p>
                             {usuario &&
-                                <Boton>Votar</Boton>
+                                <Boton
+                                    onClick={votarProducto}
+                                >Votar</Boton>
                             }
                         </div>
                     </aside>

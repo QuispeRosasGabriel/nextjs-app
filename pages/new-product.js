@@ -8,6 +8,7 @@ import FileUploader from 'react-firebase-file-uploader';
 import useValidation from '../hooks/useValidation';
 import validateNewProduct from '../validators/validateNewProduct';
 import Router, {useRouter} from 'next/router';
+import React from 'react';
 import Error404 from '../components/layouts/404';
 const STATE_INICIAL = {
   nombre: '',
@@ -92,7 +93,7 @@ const NewProduct = () => {
     .then((url) => setUrlImage(url));
   }
 
-  if(!usuario) return; 
+  if(!usuario) return null; 
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import  { Fragment, useContext } from 'react'
 import Search from '../ui/Search'
 import Navbar from './Navbar'
 import Link from 'next/link';
