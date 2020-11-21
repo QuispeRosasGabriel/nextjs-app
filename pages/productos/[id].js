@@ -20,6 +20,17 @@ const ContenedorProducto = styled.div`
     }
 `;
 
+const CreadorProducto = styled.p`
+    padding: .5rem 2rem;
+    background-color: #DA552F;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center; 
+`;
+
+
 const Producto = () => {
 
     // state del componente 
@@ -97,6 +108,9 @@ const Producto = () => {
         })
     }
 
+    // identifica si el comentario es el creador del producto
+    const esCreador = (id) => creador.id === id ? true : false;
+
     const agregarComentario = (e) => {
         e.preventDefault();
 
@@ -157,7 +171,7 @@ const Producto = () => {
                             margin: 2rem 0;
 
                         `}>Comentarios</h2>
-                        {comentiors.length === 0 ? 'Aun no hay comentarios'
+                        {comentarios?.length === 0 ? 'Aun no hay comentarios'
                             : (
                                 <ul>
                                     {comentarios?.map((comentario, idx) => (
@@ -173,6 +187,8 @@ const Producto = () => {
                                                     {comentario.usuarioNombre}
                                                 </span>
                                             </p>
+                                            {esCreador(comentario.usuarioId) &&
+                                            (<CreadorProducto>Es creador</CreadorProducto>)}
                                         </li>
                                     ))}
                                 </ul>
