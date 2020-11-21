@@ -143,6 +143,25 @@ const Producto = () => {
         setConsultarDB(true);
     }
 
+    const puedeBorrar = () => creador.id === usuario.id ? true : false;
+
+    const eliminarProducto = async () => {
+        if(!usuario) {
+            return router.push('/'); 
+        }
+
+        if(!creador.id !== usuario.id) {
+            return router.push('/'); 
+        }
+        
+        try {
+            await firebase.db.collection('productos').doc(id).delete();
+            router.push('/'); 
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <Layout>
             {error ? <Error404 />
@@ -224,6 +243,11 @@ const Producto = () => {
                                 </div>
                             </aside>
                         </ContenedorProducto>
+                        {puedeBorrar &&
+                            <Boton
+                            onClick={eliminarProducto}
+                            >Eliminar Producto</Boton>
+                        }
                     </div>
                 )
             }
