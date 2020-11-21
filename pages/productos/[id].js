@@ -57,7 +57,9 @@ const Producto = () => {
         nombre,
         url,
         urlImage,
-        creador } = producto;
+        creador,
+        haVotado
+    } = producto;
 
     // Administrar y validar los votos
     const votarProducto = () => {
@@ -68,8 +70,16 @@ const Producto = () => {
         // Obtener y sumar un nuevo voto
         const nuevoTotal = votos + 1;
 
+        // Verificar si el usuario actual ha votado
+        if(haVotado.includes(usuario.uid)) return;
+
+        // Guardar el id del usuario que ha votado
+        const nuevoHaVotado = [...haVotado, usuario.uid];
+
+
         // Actualizar en la base de datos
-        firebase.db.collection('productos').doc(id).update({ votos: nuevoTotal })
+        firebase.db.collection('productos').doc(id)
+        .update({ votos: nuevoTotal, haVotado: nuevoHaVotado})
 
         setProducto({
             ...producto,
