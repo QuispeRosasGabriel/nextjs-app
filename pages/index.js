@@ -1,12 +1,12 @@
 import DetailsProduct from '../components/layouts/DetailsProduct';
 import Layout from '../components/layouts/Layout'; 
 import useProductos from '../hooks/useProducts';
+
 const Home = () => {
 
   const {products} = useProductos('votos');
 
   return (
-    <div>
       <Layout>
         <div className="listado-productos">
           <div className="contenedor">
@@ -23,7 +23,6 @@ const Home = () => {
           </div>
         </div>
       </Layout>
-    </div>
   )
 }
 

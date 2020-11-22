@@ -1,6 +1,11 @@
 import Layout from '../components/layouts/Layout'; 
+import {useRouter} from 'next/router';
 
-export default function Search() {
+const Search = () => {
+
+  const router = useRouter();
+  const {query: {q}} = router; 
+
   return (
     <div>
       <Layout>
@@ -9,3 +14,5 @@ export default function Search() {
     </div>
   )
 }
+
+export default Search; 
